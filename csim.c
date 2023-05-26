@@ -1,6 +1,4 @@
 
-/* Murat Sankaya - ms12080 */
-
 #include "lab3.h"
 #include <math.h>
 #include <stdlib.h>
