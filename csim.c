@@ -232,7 +232,7 @@ int main(int argc, char **argv)
 
 	for(size_t i = 0; i < S; ++i){ //cache is an array of sets
             free(cache[i].line_array); //free all the lines
-    }	
+    	}	
 
 	free(cache); //free the cache 
    
