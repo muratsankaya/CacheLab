@@ -24,14 +24,15 @@ int store(struct line *curr_line_array, int E, unsigned long tag, int verbose_mo
 	for(size_t i = 0; i < E; ++i){ //first search for a tag match
 		if(curr_line_array[i].tag == tag){
 			++(*hit_count);
-			if(verbose_mode) printf(" hit");
+			if(verbose_mode) 
+				printf(" hit");
 			if(!curr_line_array[i].valid_bit) 
 				curr_line_array[i].valid_bit = 1;
 			return i;
 		}
 	}
 							
-	//first see if there are any unsued line
+	//then see if there are any unsued line
 	for(size_t i = 0; i < E; ++i){
 		if(!curr_line_array[i].valid_bit){
 			++(*miss_count);
@@ -44,17 +45,19 @@ int store(struct line *curr_line_array, int E, unsigned long tag, int verbose_mo
 	}
 			
 	//if there aren't any unused lines or matching tags
-	//than the least used line should be evicted
+	//the least used line should be evicted
 	size_t lru_index = 0;
 	for(size_t i = 1; i < E; ++i){
 		if(curr_line_array[i].last_used < curr_line_array[lru_index].last_used)
 			lru_index = i;
 		
 	}
+
 	curr_line_array[lru_index].tag = tag;
 	++(*eviction_count);
 	++(*miss_count);
-	if(verbose_mode) printf(" miss eviction");
+	if(verbose_mode) 
+		printf(" miss eviction");
 	return lru_index;
 			
 }
@@ -76,7 +79,7 @@ int load(struct line *curr_line_array, int E, unsigned long tag, int verbose_mod
 			//data can be transfered to the current line 	 
 			else{  
 			        if(verbose_mode)
-					printf(" miss");
+						printf(" miss");
 				++(*miss_count);
 				curr_line_array[i].valid_bit = 1;
 			}
@@ -158,6 +161,7 @@ int main(int argc, char **argv)
 	int hit_count = 0, miss_count = 0, eviction_count = 0;		
 
 	while(fgets(input_line, sizeof(input_line), iFile)){
+
 		if(input_line[0] == 'I')
 			continue; 		
 
@@ -167,7 +171,8 @@ int main(int argc, char **argv)
 						
 		if(verbose_mode) 
 			printf("%s ", iptr); 
-      		char *instruction = strtok(iptr, " ");
+      	
+		char *instruction = strtok(iptr, " ");
 		
 		iptr += 2; //move to the beginning of input memory
 		
@@ -219,7 +224,6 @@ int main(int argc, char **argv)
 		}	
 
 		
-
 	}
 	
 	printSummary(hit_count, miss_count, eviction_count);
@@ -227,8 +231,8 @@ int main(int argc, char **argv)
 	fclose(iFile);	
 
 	for(size_t i = 0; i < S; ++i){ //cache is an array of sets
-                free(cache[i].line_array); //free all the lines
-        }	
+            free(cache[i].line_array); //free all the lines
+    }	
 
 	free(cache); //free the cache 
    
